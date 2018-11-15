@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-double miew(int data[][4],double left,double startX,double startY,double endX,double endY,int m);
+double pathRisk(int data[][4],double left,double startX,double startY,double endX,double endY,int m);
          //宣告一個函式，input威脅點資料,起點終點座標,威脅點個數及上段路段剩下的長度 
 int main()
 {
@@ -22,7 +22,7 @@ int main()
 	cin >> left;                //輸入上段路段剩餘的長度 
     cout << miew(data,left,x1,y1,x2,y2,m);
 }
-double miew(int data[][4],double left,double startX,double startY,double endX,double endY,int m)
+double pathRisk(int data[][4],double left,double startX,double startY,double endX,double endY,int m)
 {
 	double distance = sqrt(pow(startX-endX,2)+pow(startY-endY,2));
 	startX -= ((endX-startX)/distance*left);
