@@ -1,0 +1,49 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+double miew(int data[][4],double left,double startX,double startY,double endX,double endY,int m);
+         //宣告一個函式，input威脅點資料,起點終點座標,威脅點個數及上段路段剩下的長度 
+int main()
+{
+	int m = 0;                  //m為威脅點個數 
+	cin >> m;                   
+	int data[100][4]={0};
+	for(int i = 0;i<m;i++)
+        cin >> data[i][0];      //輸入威脅點的X座標 
+    for(int i = 0;i<m;i++)
+        cin >> data[i][1];      //輸入威脅點的Y座標                                
+    for(int i = 0;i<m;i++)
+        cin >> data[i][2];      //輸入威脅點的威脅半徑 
+    for(int i = 0;i<m;i++)
+        cin >> data[i][3];      //輸入威脅點的威脅程度
+    double x1,y1,x2,y2;
+    cin >> x1>>y1>>x2>>y2;      //輸入想算的路段
+	double left = 0;
+	cin >> left;                //輸入上段路段剩餘的長度 
+    cout << miew(data,left,x1,y1,x2,y2,m);
+}
+double miew(int data[][4],double left,double startX,double startY,double endX,double endY,int m)
+{
+	double distance = sqrt(pow(startX-endX,2)+pow(startY-endY,2));
+	startX -= ((endX-startX)/distance*left);
+	startY -= ((endY-startY)/distance*left);
+	distance +=left;
+	int roadCnt = distance;
+	if(roadCnt==distance)
+	roadCnt--;
+	double d = 0,t = 0;
+	for(int i = 0;i<roadCnt;i++)
+		{
+			double x=((((endX-startX)/distance)*(i+1))+startX);
+			double y=((((endY-startY)/distance)*(i+1))+startY);
+			for(int j = 0;j<m;j++)
+			{
+				d = sqrt(pow(x-data[j][0],2)+pow(y-data[j][1],2));
+				if(d>=data[j][2])
+				continue;
+				t = t+(data[j][3]*(data[j][2]-d)/data[j][2]);
+				
+			}
+		}
+	return t;
+}
